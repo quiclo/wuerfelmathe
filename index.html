@@ -221,49 +221,6 @@
             <h3>Button „Reset“</h3>
             <p>Der Button „Reset“ löscht alle Zahlen und startet eine neue Runde.</p>
 
-            <h3>Beispiele</h3>
-
-            <p>
-                <b>Beispiel Einfach: [1–49]</b><br>
-                Würfelzahlen: 3, 10, 12, 12, 7, 3<br>
-                Zielzahlen: 48, 7, 29, 39, 11, 32<br>
-                Lösungsbeispiele:<br>
-                48 = 3*12+12<br>
-                7 = 7<br>
-                29 = 3*12-7<br>
-                39 = 3*12+3<br>
-                11 = 3*7-10<br>
-                32 = 3+10+12+7
-            </p>
-
-            <p>
-                <b>Beispiel Mittel: [1–100]</b><br>
-                Würfelzahlen: 2, 12, 4, 10, 2, 7<br>
-                Zielzahlen: 25, 45, 93, 90, 58, 40<br>
-                Lösungsbeispiele:<br>
-                25 = 2+12+4+7<br>
-                45 = 4*10-2+7<br>
-                93 = 2*12*4-10+7<br>
-                90 = 2+12*7+4<br>
-                58 = 12*4+10<br>
-                40 = 4*10
-            </p>
-
-            <p>
-                <b>Beispiel Schwer: [1–144]</b><br>
-                Würfelzahlen: 11, 11, 3, 6, 6, 6<br>
-                Zielzahlen: 136, 144, 76, 131, 30, 24<br>
-                Lösungsbeispiele:<br>
-                136 = 11*11+3+6+6<br>
-                144 = keine Lösung<br>
-                76 = 11+11*6-6/6<br>
-                131 = 11*11+3+6/6+6<br>
-                30 = 6*6-6<br>
-                24 = 3*6+6
-            </p>
-
-            <p><b>Versuche möglichst viele Zielzahlen korrekt zu erreichen.</b></p>
-
             <hr style="margin-top:40px;">
             <p style="text-align:center; font-size:14px; color:#555;">
                 © Fritz Deckert Germany
@@ -297,10 +254,18 @@ document.querySelectorAll(".rangeBtn").forEach(b=>b.classList.remove("active"));
 btn.classList.add("active");
 }
 
+/* 🎲 Würfeln blendet alte Ergebnisse aus */
 function randomAll(){
+
+isCalculating=false;
+document.getElementById("loader").style.display="none";
+document.getElementById("calcBtn").disabled=false;
+document.getElementById("results").innerHTML="";
+
 document.querySelectorAll("#diceInputs input").forEach(i=>{
 i.value=Math.floor(Math.random()*12)+1;
 });
+
 document.querySelectorAll("#lottoInputs input").forEach(i=>{
 i.value=Math.floor(Math.random()*currentMax)+1;
 });
@@ -320,9 +285,7 @@ isCalculating=false;
 document.getElementById("loader").style.display="none";
 document.getElementById("calcBtn").disabled=false;
 }
-
-let confirmQuit = confirm("Möchten Sie das Spiel wirklich beenden?");
-if(confirmQuit){
+if(confirm("Möchten Sie das Spiel wirklich beenden?")){
 resetAll();
 switchScreen("startScreen");
 }
